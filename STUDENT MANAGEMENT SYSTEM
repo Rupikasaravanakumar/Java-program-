@@ -1,0 +1,120 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+// Student class to hold student details
+class Student {
+    private int rollNo;
+    private String name;
+    private String course;
+
+    public Student(int rollNo, String name, String course) {
+        this.rollNo = rollNo;
+        this.name = name;
+        this.course = course;
+    }
+
+    public int getRollNo() {
+        return rollNo;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getCourse() {
+        return course;
+    }
+
+    public void displayInfo() {
+        System.out.println("Roll No: " + rollNo);
+        System.out.println("Name: " + name);
+        System.out.println("Course: " + course);
+    }
+}
+
+// Main class for the student management system
+public class StudentManagementSystem {
+    private static ArrayList<Student> students = new ArrayList<>();
+    private static Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) {
+        int choice;
+
+        do {
+            System.out.println("\n=== STUDENT MANAGEMENT SYSTEM ===");
+            System.out.println("1. Add Student");
+            System.out.println("2. Display All Students");
+            System.out.println("3. Search Student by Roll No");
+            System.out.println("4. Exit");
+            System.out.print("Enter your choice: ");
+            choice = scanner.nextInt();
+
+            switch (choice) {
+                case 1:
+                    addStudent();
+                    break;
+                case 2:
+                    displayAllStudents();
+                    break;
+                case 3:
+                    searchStudent();
+                    break;
+                case 4:
+                    System.out.println("Exiting program...");
+                    break;
+                default:
+                    System.out.println("Invalid choice! Try again.");
+            }
+        } while (choice != 4);
+    }
+
+    // Method to add a student
+    private static void addStudent() {
+        System.out.print("Enter Roll No: ");
+        int rollNo = scanner.nextInt();
+        scanner.nextLine();  // consume newline
+
+        System.out.print("Enter Name: ");
+        String name = scanner.nextLine();
+
+        System.out.print("Enter Course: ");
+        String course = scanner.nextLine();
+
+        Student student = new Student(rollNo, name, course);
+        students.add(student);
+        System.out.println("Student added successfully!");
+    }
+
+    // Method to display all students
+    private static void displayAllStudents() {
+        if (students.isEmpty()) {
+            System.out.println("No student records found.");
+        } else {
+            System.out.println("\n=== STUDENT LIST ===");
+            for (Student student : students) {
+                student.displayInfo();
+                System.out.println("--------------------");
+            }
+        }
+    }
+
+    // Method to search a student by roll number
+    private static void searchStudent() {
+        System.out.print("Enter Roll No to search: ");
+        int rollNo = scanner.nextInt();
+        boolean found = false;
+
+        for (Student student : students) {
+            if (student.getRollNo() == rollNo) {
+                System.out.println("\nStudent Found:");
+                student.displayInfo();
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) {
+            System.out.println("Student not found with Roll No: " + rollNo);
+        }
+    }
+}
